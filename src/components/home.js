@@ -3,7 +3,7 @@ import * as BooksApi from '../BooksAPI'
 import '../App.css';
 import { Link } from 'react-router-dom';
 
-import Books from './books';
+import Shelf from './shelfs';
 
 class Home extends React.Component {
   constructor() {
@@ -28,11 +28,6 @@ class Home extends React.Component {
     this.getAllBooks()
   }
 
-  newBooks()  {
-    console.log("news")
-  }
-
-
   onUpdateStatus(event, book) {
     BooksApi.update(book, event.target.value)
     .then(res => res.json())
@@ -50,38 +45,20 @@ class Home extends React.Component {
             <h1>MyReads</h1>
           </div>
           <div className="list-books-content">
-            <div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Currently Reading</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    <Books books={this.state.allBooks}
-                    shelf={"currentlyReading"}
-                    onUpdateStatus={this.onUpdateStatus}/>
-                  </ol>
-                </div>
-              </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Want to Read</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    <Books books={this.state.allBooks}
-                    shelf={"wantToRead"}
-                    onUpdateStatus={this.onUpdateStatus}/>
-                  </ol>
-                </div>
-              </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Read</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    <Books books={this.state.allBooks}
-                    shelf={"read"}
-                    onUpdateStatus={this.onUpdateStatus} />
-                  </ol>
-                </div>
-              </div>
-            </div>
+            <Shelf allBooks={this.state.allBooks}
+            title={"Currently Reading"}
+            shelf={"currentlyReading"}
+            onUpdateStatus={this.onUpdateStatus} />
+
+            <Shelf allBooks={this.state.allBooks}
+            title={"Want to Read"}
+            shelf={"wantToRead"}
+            onUpdateStatus={this.onUpdateStatus} />
+
+            <Shelf allBooks={this.state.allBooks}
+            title={"Read"}
+            shelf={"read"}
+            onUpdateStatus={this.onUpdateStatus} />
           </div>
             <p className="open-search">
               <Link to="/search">Search</Link>
